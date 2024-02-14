@@ -1,1 +1,1 @@
-# INF581_RL
+# Car Racing. Projet INF581
