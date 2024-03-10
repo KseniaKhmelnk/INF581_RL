@@ -1,5 +1,6 @@
 # Car Racing. Projet INF581
-\textit{The DQN (Deep Q-Network) algorithm} \cite{DQN_lecture}, developed by DeepMind in 2015, marked a significant breakthrough in artificial intelligence. At its core, the DQN algorithm builds upon the foundation of Q-Learning, a classic reinforcement learning technique. However, it enhances Q-Learning by leveraging deep neural networks and introducing a new concept known as experience replay.
+
+**The DQN (Deep Q-Network) algorithm**, developed by DeepMind in 2015, marked a significant breakthrough in artificial intelligence. At its core, the DQN algorithm builds upon the foundation of Q-Learning, a classic reinforcement learning technique. However, it enhances Q-Learning by leveraging deep neural networks and introducing a new concept known as experience replay.
 During the training phase of Q-learning, the Q-value of a state-action pair directly is updating this way:
 
 $$Q^{*}_{k + 1} (s, a) \xleftarrow{} Q^{*}_{k}(s, a) + \alpha (r + \gamma 
