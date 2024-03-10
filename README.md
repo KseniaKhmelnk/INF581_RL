@@ -13,7 +13,5 @@ where $$ y_i = r + \gamma \max_{a'} \ Q_{k}(s', a'; \theta_i).$$
 Experience replay memory serves as a crucial component in training the DQN model. It functions by storing transitions observed by the agent during gameplay, allowing for the reuse of this valuable data in subsequent training iterations. This approach significantly enhances the stability and effectiveness of the DQN training procedure, enabling more robust and efficient learning.
 
 The Deep Q-Learning training algorithm has two phases:
-\begin{itemize}
-    \item Sampling: we perform actions and store the observed experience tuples in a replay memory.
-    \item Training: Select a small batch of tuples randomly and learn from this batch using a gradient descent update step.
-\end{itemize}
+- **Sampling**: we perform actions and store the observed experience tuples in a replay memory.
+- **Training**: Select a small batch of tuples randomly and learn from this batch using a gradient descent update step.
