@@ -52,7 +52,6 @@ python train.py --model PPO --save-path /path/to/model/weights
 ```
 
 ## Repository Structure 📁
-
     .
     │
     ├── run.py                     # Script for executing trained models
