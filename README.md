@@ -1,13 +1,13 @@
 # Car Racing. Projet INF581
 
 ## Table of Contents
-- [Description](#description-📝)
-- [Installation](#installation-️🛠)
-- [Usage](#usage-🚀)
-  - [Running Models (run.py)](#running-models-runpy-🏃‍♂️)
-  - [Training Models (train.py)](#training-models-trainpy-🎓)
-- [Repository Structure](#repository-structure-📁)
-- [References](#references-📚)
+- [Description](#description) 📝
+- [Installation](#installation) 🛠
+- [Usage](#usage) 🚀
+  - [Running Models (run.py)](#running-models-runpy) 🏃‍♂️
+  - [Training Models (train.py)](#training-models-trainpy) 🎓
+- [Repository Structure](#repository-structure) 📁
+- [References](#references) 📚
 
 ## Description 📝
 This project contains scripts for running and training reinforcement learning models in the Gymnasium's CarRacing environment.
@@ -52,27 +52,26 @@ python train.py --model PPO --save-path /path/to/model/weights
 ```
 
 ## Repository Structure 📁
-
-project-root/
-│
-├── run.py                     # Script for executing trained models
-├── train.py                   # Script for training new models
-│
-├── src/                       # Source code directory
-│   ├── models/                # Directory containing model implementations
-│   │   ├── ...                # Model implementation files
-│   │   └── __init__.py        # Init file for models package
-│   │
-│   ├── envs/                  # Directory containing environment implementations
-│   │   ├── ...                # Environment implementation files
-│   │   └── __init__.py        # Init file for envs package
-│   │
-│   └── utils.py               # Utility functions used across the project
-│
-├── trained_models/            # Directory for storing trained model weights
-│   └── ...                     # Saved model weights files
-│
-└── README.md                  # Project documentation 
+    .
+    │
+    ├── run.py                     # Script for executing trained models
+    ├── train.py                   # Script for training new models
+    │
+    ├── src/                       # Source code directory
+    │   ├── models/                # Directory containing model implementations
+    │   │   ├── ...                # Model implementation files
+    │   │   └── __init__.py        # Init file for models package
+    │   │
+    │   ├── envs/                  # Directory containing environment implementations
+    │   │   ├── ...                # Environment implementation files
+    │   │   └── __init__.py        # Init file for envs package
+    │   │
+    │   └── utils.py               # Utility functions used across the project
+    │
+    ├── trained_models/            # Directory for storing trained model weights
+    │   └── ...                     # Saved model weights files
+    │
+    └── README.md                  # Project documentation 
 
 ## References 📚
 - Read. Lecture VI - Reinforcement Learning III. In *INF581 Advanced Machine Learning and Autonomous Agents*, 2024.
