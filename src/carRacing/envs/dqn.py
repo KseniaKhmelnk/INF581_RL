@@ -87,5 +87,5 @@ class envDQN(CustomEnv):
         img = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
 
         # crop
-        img = img[:84, 6:90]
+        img = img[:84, 6:90] / 255.0
         return img

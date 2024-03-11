@@ -11,8 +11,8 @@ class envPPO(CustomEnv):
       stack_frames=4, # number of frames to stack
       skip_frames=4, # number of frames to wait between actions
       initial_no_op=50, # used to skip the 'cinematics'    at the start the game
-      clip_reward=True,
-      expand_action_space=False,
+      clip_reward=False,
+      expand_action_space=True,
       max_episode_steps=500,
       **kwargs,
     ) -> None:
