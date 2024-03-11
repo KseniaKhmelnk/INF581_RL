@@ -12,7 +12,7 @@ class CarRacingModel(ABC):
         ...
 
     @abstractmethod
-    def predict(self, observation: np.ndarray) -> Union[List, int]:
+    def predict(self, observation: np.ndarray, **kwargs) -> Union[List, int]:
         ...
 
     @abstractmethod

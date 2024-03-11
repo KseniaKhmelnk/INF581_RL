@@ -12,7 +12,6 @@ class  PPO(CarRacingModel):
     
     def __init__(self, env):
         check_env(env)
-        self.env = env 
         self.make_env = lambda: env
 
     def train(
