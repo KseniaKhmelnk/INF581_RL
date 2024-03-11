@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 from typing import Union, List
 import numpy as np
 
-
 class CarRacingModel(ABC):
 
     @abstractmethod

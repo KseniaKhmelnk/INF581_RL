@@ -5,7 +5,6 @@ from stable_baselines3.common.env_checker import check_env
 from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv
 from stable_baselines3.common.callbacks import EvalCallback, CheckpointCallback, CallbackList
 
-import gymnasium as gym
 import numpy as np
 
 class  PPO(CarRacingModel):
@@ -13,6 +12,7 @@ class  PPO(CarRacingModel):
     def __init__(self, env):
         check_env(env)
         self.make_env = lambda: env
+        self.model = sb3_PPO("CnnPolicy", DummyVecEnv([self.make_env]), verbose=0)
 
     def train(
         self,
@@ -67,5 +67,5 @@ class  PPO(CarRacingModel):
     def load(self, load_path: str) -> None: 
         self.model = sb3_PPO.load(load_path)
 
-    def save(self, save_path: str = "ppo_model") -> None:
+    def save(self, save_path: str = "ppo") -> None:
         self.model.save(save_path)

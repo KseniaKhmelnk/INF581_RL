@@ -1,5 +1,10 @@
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 import imageio
+
+from carRacing.models import DQN, PPO, CEM, DDPG
+from carRacing.envs import envDQN, envPPO, Default
 
 def render_episode(env, model):
     assert env.render_mode == "human"
@@ -20,7 +25,7 @@ def render_episode(env, model):
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+                if event.key == pygame.K_ESCAPE or event.key == pygame.K_q: # press ESC or Q to exit
                     running = False
     env.close()
 
@@ -43,3 +48,15 @@ def gif_episode(env, model, save_path: str = "episode.gif", fps=24):
 
     env.close()
     imageio.mimsave(save_path, imgs, fps=fps)
+
+def get_model_env_by_name(model_name: str, render_mode: str):
+    options = {
+        "DQN": (envDQN(render_mode), DQN),
+        "PPO": (envPPO(render_mode), PPO),
+        "CEM": (Default(False, render_mode), CEM),
+        "DDPG": (Default(True, render_mode), DDPG),
+    }
+    assert model_name in options.keys() 
+    env, model_class = options[model_name]
+    return model_class(env), env
+

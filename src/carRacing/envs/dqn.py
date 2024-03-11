@@ -55,7 +55,6 @@ class envDQN(CustomEnv):
         return self.stacked_state, info
 
     def step(self, action: int) -> Tuple[np.ndarray, float, bool, bool, Dict]:
-        action = self.action_map[action]
         self.step_count += 1
 
         # $action is taken for the next $skip_frames frames
