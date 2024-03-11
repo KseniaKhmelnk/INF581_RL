@@ -1,5 +1,5 @@
 from carRacing.envs.abstract import CustomEnv 
-from typing import Tuple, List, Dict, TypeAlias
+from typing import Tuple, Dict
 import numpy as np
 import gymnasium as gym
 import cv2 as cv

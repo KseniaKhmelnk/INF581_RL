@@ -63,7 +63,7 @@ class  PPO(CarRacingModel):
         
     
     def predict(self, observation: np.ndarray) -> int:
-        return self.model.predict(observation)
+        return self.model.predict(observation)[0]
 
     def load(self, load_path: str) -> None: 
         self.model = sb3_PPO.load(load_path)
