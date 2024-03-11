@@ -20,9 +20,9 @@ classifiers = [
 dependencies = [
     'numpy',
     'gymnasium[Box2D]',
-    'matplotlib',
     'torch',
     'opencv-python',
     'imageio',
     'stable-baselines3',
+    'tqdm',
 ]
