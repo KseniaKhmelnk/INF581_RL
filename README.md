@@ -1,13 +1,13 @@
 # Car Racing. Projet INF581
 
 ## Table of Contents
-- [Description](#description-📝)
-- [Installation](#installation-️🛠)
-- [Usage](#usage-🚀)
-  - [Running Models (run.py)](#running-models-runpy-🏃‍♂️)
-  - [Training Models (train.py)](#training-models-trainpy-🎓)
-- [Repository Structure](#repository-structure-📁)
-- [References](#references-📚)
+- [Description](#description) 📝
+- [Installation](#installation) 🛠
+- [Usage](#usage) 🚀
+  - [Running Models (run.py)](#running-models-runpy) 🏃‍♂️
+  - [Training Models (train.py)](#training-models-trainpy) 🎓
+- [Repository Structure](#repository-structure) 📁
+- [References](#references) 📚
 
 ## Description 📝
 This project contains scripts for running and training reinforcement learning models in the Gymnasium's CarRacing environment.
