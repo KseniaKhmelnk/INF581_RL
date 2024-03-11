@@ -41,7 +41,9 @@ class CEM(CarRacingModel):
         return self.nn_policy(observation)
 
     def load(self, model_path: str) -> None:
-        self.nn_policy.load_state_dict(torch.load(model_path))
+        with open(model_path, "rb") as f:
+            theta = np.load(f)
+        self.nn_policy.change_weights(theta)
     
     def save(self, model_path: str = "cem.pt") -> None:
         torch.save(self.nn_policy.state_dict(), model_path)

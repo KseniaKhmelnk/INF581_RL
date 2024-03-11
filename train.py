@@ -12,7 +12,7 @@ if __name__ == "__main__":
     model_name = args.model
 
     # get model
-    model, _ = get_model_by_name(model_name, render_mode="rgb_array")
+    model, _ = get_model_env_by_name(model_name, render_mode="rgb_array")
     
     # train
     print(f"Training {args.model} model...")
