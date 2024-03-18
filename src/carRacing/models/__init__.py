@@ -1,3 +1,4 @@
+__all__ = ["PPO", "DQN", "CEM", "DDPG"]
 from carRacing.models.ppo import PPO
 from carRacing.models.dqn import DQN
 from carRacing.models.cem import CEM
