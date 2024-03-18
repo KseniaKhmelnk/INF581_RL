@@ -42,7 +42,7 @@ class envPPO(CustomEnv):
 
     def reset(self, **kwargs) -> Tuple[np.ndarray, Dict]:
         # reset the original environment.
-        s, info = self.env.reset()
+        s, info = self.env.reset(**kwargs)
         self.step_count = 0
 
         # do nothing for the next self.initial_no_op steps

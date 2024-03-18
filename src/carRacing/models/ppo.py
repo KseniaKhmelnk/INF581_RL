@@ -1,6 +1,6 @@
 from carRacing.models.abstract import CarRacingModel
 
-from stable_baselines3 import PPO as sb3_PPO
+import stable_baselines3 as sb3
 from stable_baselines3.common.env_checker import check_env
 from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv
 from stable_baselines3.common.callbacks import EvalCallback, CheckpointCallback, CallbackList
@@ -10,9 +10,7 @@ import numpy as np
 class  PPO(CarRacingModel):
     
     def __init__(self, env):
-        check_env(env)
         self.make_env = lambda: env
-        self.model = sb3_PPO("CnnPolicy", DummyVecEnv([self.make_env]), verbose=0)
 
     def train(
         self,
@@ -21,15 +19,16 @@ class  PPO(CarRacingModel):
         eval_freq: int = 0,
         checkpoint_freq: int = 0,
     ) -> None:
-        
-        assert isinstance(num_envs, int) and num_envs > 0
 
+        check_env(self.make_env())
+
+        assert isinstance(num_envs, int) and num_envs > 0
         if num_envs > 1: 
             envs = SubprocVecEnv([self.make_env]*num_envs)
         else: 
             envs = DummyVecEnv([self.make_env])
         
-
+        
         callback_list = []
         
         # add eval callback
@@ -54,10 +53,10 @@ class  PPO(CarRacingModel):
                save_freq=checkpoint_freq//num_envs,
               )
             )
-
+        
         # train
         callback = CallbackList(callback_list) 
-        self.model = sb3_PPO("CnnPolicy", envs, verbose=0, tensorboard_log="tensorboard")
+        self.model = sb3.PPO("CnnPolicy", envs, verbose=0, tensorboard_log="tensorboard")
         self.model.learn(total_timesteps=total_timesteps, callback=callback, tb_log_name="ppo")
         
     
@@ -65,7 +64,13 @@ class  PPO(CarRacingModel):
         return self.model.predict(observation)[0]
 
     def load(self, load_path: str) -> None: 
-        self.model = sb3_PPO.load(load_path)
-
+        self.model = sb3.PPO.load(
+                load_path,
+                custom_objects = {
+                    "learning_rate": 0.0,
+                    "lr_schedule": lambda _: 0.0,
+                    "clip_range": lambda _: 0.0,
+                }) # fix small problem, when loading a model trained with python 3.7 in python3.8+ 
+    
     def save(self, save_path: str = "ppo") -> None:
         self.model.save(save_path)
