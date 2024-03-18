@@ -10,7 +10,7 @@
 - [References](#references) 📚
 
 ## Description 📝
-This project contains scripts for running and training reinforcement learning models in the Gymnasium's CarRacing environment.
+This project contains scripts for running and training reinforcement learning models in the Gymnasium's CarRacing environment. For more details about what it is about, check the ```report.pdf``` file.
 
 The implemented models include Deep Q-Network (DQN), Proximal Policy Optimization (PPO), Cross-Entropy Method (CEM), and Deep Deterministic Policy Gradient (DDPG).
 
