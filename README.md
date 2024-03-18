@@ -38,8 +38,10 @@ To run a trained model, use the `run.py` script with the following options:
 
 Example usage:
 ```bash
-python run.py --model DQN --load-path /path/to/model/weights --mode play
+python run.py --model DQN --load-path trained_models/dqn_500_steps.pt --mode play
 ```
+
+Be sure to select a model compatible with the saved weights.
 
 ### Training Models (train.py) 🎓
 To train a new model, use the `train.py` script with the following options:
