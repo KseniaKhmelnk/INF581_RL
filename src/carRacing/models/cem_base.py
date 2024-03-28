@@ -218,3 +218,151 @@ def cem_uncorrelated(objective_function,
             break
 
     return mean_array, var_array, hist_dict
+
+
+def cem_uncorrelated(objective_function,
+                     policy,
+                     mean_array,
+                     var_array,
+                     max_iterations=500,
+                     sample_size=50,
+                     elite_frac=0.2,
+                     print_every=10,
+                     success_score=float("inf"),
+                     num_evals_for_stop=None,
+                     hist_dict=None):
+    """Cross-entropy method.
+
+    Params
+    ======
+        objective_function (function): the function to maximize
+        mean_array (array of floats): the initial proposal distribution (mean vector)
+        var_array (array of floats): the initial proposal distribution (variance vector)
+        max_iterations (int): number of training iterations
+        sample_size (int): size of population at each iteration
+        elite_frac (float): rate of top performers to use in update with elite_frac ∈ ]0;1]
+        print_every (int): how often to print average score
+        hist_dict (dict): logs
+    """
+    assert 0. < elite_frac <= 1.
+
+    n_elite = math.ceil(sample_size * elite_frac)
+    if len(hist_dict.keys()) == 0:
+        hist_dict['reward'] = []
+
+    n_params = len(mean_array)
+    pbar = tqdm(range(max_iterations), desc='Fitting theta')
+    for i in pbar:
+        samples = np.random.normal(mean_array, np.sqrt(var_array), (sample_size, n_params))
+        scores = []
+        for sample_index in range(len(samples)):
+            policy.change_weights(samples[sample_index])
+            scores += [objective_function(pbar=pbar, sample_index=sample_index)]
+        scores = np.array(scores)
+        # print(scores[scores.argsort()])
+        elite_idx = scores.argsort()[:n_elite]
+        elite_samples = samples[elite_idx]
+
+        mean_array = elite_samples.mean(0)
+        # print(mean_array)
+        var_array = elite_samples.var(0)
+
+
+        pbar.set_postfix({
+            'current best score': -scores[elite_idx[0]]
+        })
+
+        hist_dict['reward']+=[np.mean(-scores)]
+
+        if (i % print_every == 0 or i == max_iterations - 1) and i != 0:
+            print(f"""
+            =======================
+            Iteration {i+1},
+            mean score = {-scores.mean()},
+            current best score = {-scores[elite_idx[0]]}
+            =======================""")
+
+        if scores[elite_idx[0]] <= success_score:
+            print(f"\nWe got succes score at {i+1} iteration, current best score = {-scores[elite_idx[0]]}, success_score = {-success_score}")
+            break
+
+        if num_evals_for_stop is not None and objective_function.num_evals >= num_evals_for_stop:
+            print(f"\nStopping after {objective_function.num_evals} evaluations.")
+            break
+
+    return mean_array, var_array, hist_dict
+
+
+def cem_correlated(objective_function,
+                   policy, 
+                   mean_array,
+                   var_array,
+                   max_iterations=500,
+                   sample_size=50,
+                   elite_frac=0.2,
+                   print_every=10,
+                   success_score=float("inf"),
+                   num_evals_for_stop=None,
+                   hist_dict=None):
+    """Cross-entropy method.
+
+    Params
+    ======
+        objective_function (function): the function to maximize
+        mean_array (array of floats): the initial proposal distribution (mean vector)
+        var_array (array of floats): the initial proposal distribution (variance vector)
+        max_iterations (int): number of training iterations
+        sample_size (int): size of population at each iteration
+        elite_frac (float): rate of top performers to use in update with elite_frac ∈ ]0;1]
+        print_every (int): how often to print average score
+        hist_dict (dict): logs
+    """
+    assert 0. < elite_frac <= 1.
+
+    n_elite = math.ceil(sample_size * elite_frac)
+    cov_array = np.diag(var_array)
+
+    if len(hist_dict.keys()) == 0:
+        hist_dict['reward'] = []
+
+    n_params = len(mean_array)
+    pbar = tqdm(range(max_iterations), desc='Fitting theta')
+    for i in pbar:
+        samples = np.random.multivariate_normal(mean_array, cov_array, size=sample_size)
+        scores = []
+        for sample_index in range(len(samples)):
+            policy.change_weights(samples[sample_index])
+            scores += [objective_function(pbar=pbar, sample_index=sample_index)]
+        scores = np.array(scores)
+        # print(scores[scores.argsort()])
+        elite_idx = scores.argsort()[:n_elite]
+        elite_samples = samples[elite_idx]
+
+        mean_array = elite_samples.mean(0)
+        # print(mean_array)
+        cov_array = np.cov(elite_samples, rowvar=False)
+
+
+        pbar.set_postfix({
+            'current best score': -scores[elite_idx[0]]
+        })
+
+        hist_dict['reward']+=[np.mean(-scores)]
+
+        if (i % print_every == 0 or i == max_iterations - 1) and i != 0:
+            print(f"""
+            =======================
+            Iteration {i+1},
+            mean score = {-scores.mean()},
+            current best score = {-scores[elite_idx[0]]}
+            =======================""")
+
+        if scores[elite_idx[0]] <= success_score:
+            print(f"\nWe got succes score at {i+1} iteration, current best score = {-scores[elite_idx[0]]}, success_score = {-success_score}")
+            break
+
+        if num_evals_for_stop is not None and objective_function.num_evals >= num_evals_for_stop:
+            print(f"\nStopping after {objective_function.num_evals} evaluations.")
+            break
+
+    return mean_array, var_array, hist_dict
