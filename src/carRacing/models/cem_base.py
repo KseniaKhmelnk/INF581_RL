@@ -366,3 +366,48 @@ def cem_correlated(objective_function,
             break
 
     return mean_array, var_array, hist_dict
+
+
+def cem(objective_function,
+                   policy, 
+                   mean_array,
+                   var_array,
+                   correlated: bool=False,
+                   max_iterations=500,
+                   sample_size=50,
+                   elite_frac=0.2,
+                   print_every=10,
+                   success_score=float("inf"),
+                   num_evals_for_stop=None,
+                   hist_dict=None):
+    
+    """_summary_
+
+    Returns:
+        depending on correlated it returns correlated or uncorrelated cem method
+    """   
+    
+    if correlated:
+        return cem_correlated(objective_function,
+                   policy, 
+                   mean_array,
+                   var_array,
+                   max_iterations,
+                   sample_size,
+                   elite_frac,
+                   print_every,
+                   success_score,
+                   num_evals_for_stop,
+                   hist_dict)
+    else:
+        return cem_uncorrelated(objective_function,
+                   policy, 
+                   mean_array,
+                   var_array,
+                   max_iterations,
+                   sample_size,
+                   elite_frac,
+                   print_every,
+                   success_score,
+                   num_evals_for_stop,
+                   hist_dict)

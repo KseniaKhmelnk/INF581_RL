@@ -1,11 +1,12 @@
 from carRacing.models.abstract import CarRacingModel
-from carRacing.models.cem_base import CNNPolicy, ObjectiveFunction, cem_uncorrelated
+from carRacing.models.cem_base import CNNPolicy, ObjectiveFunction, cem
 import numpy as np
 import torch
 
 class CEM(CarRacingModel):
-    def __init__(self, env):
+    def __init__(self, env, correlated:bool=False):
         self.make_env = lambda: env
+        self.correlated = correlated
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.nn_policy = CNNPolicy(self.device)
     
@@ -24,17 +25,18 @@ class CEM(CarRacingModel):
         init_mean_array = np.random.random(self.nn_policy.num_params)
         init_var_array = np.ones(self.nn_policy.num_params) * 100.
         
-        theta, var, hist_dict = cem_uncorrelated(objective_function=objective_function,
-                         policy=self.nn_policy,
-                         mean_array=init_mean_array,
-                         var_array=init_var_array,
-                         max_iterations=10,
-                         sample_size=20,
-                         elite_frac=0.1,
-                         print_every=10,
-                         success_score=-600,
-                         num_evals_for_stop=None,
-                         hist_dict=hist_dict)
+        theta, var, hist_dict = cem(objective_function,
+                   policy= self.nn_policy, 
+                   mean_array=init_mean_array,
+                   var_array=init_var_array,
+                   correlated=self.correlated,
+                   max_iterations=10,
+                   sample_size=20,
+                   elite_frac=0.1,
+                   print_every=10,
+                   success_score=-600,
+                   num_evals_for_stop=None,
+                   hist_dict=hist_dict)
         objective_function.env.close()
 
     def predict(self, observation: np.ndarray) -> int:
